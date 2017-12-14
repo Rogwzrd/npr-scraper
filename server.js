@@ -2,27 +2,41 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const hbars = require('express-handlebars');
 const path = require("path");
+const mongoose = require("mongoose");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const htmlRoutes = require("./routes/htmlRoutes");
 
+// body parser setup
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-app.set('views', path.join(__dirname, 'views'));
-
+// static files served to the client side
 app.use(express.static("public"));
 
-//handlebars setup
+// handlebars setup
 app.engine("handlebars", hbars({ defaultLayout: "main" }));
-//This will render handlebars files when res.render is called.
+// this will render handlebars files when res.render is called.
 app.set("view engine", "handlebars");
+// this will determine the file path for handlebars views
+app.set('views', path.join(__dirname, 'views'));
 
-app.get("/", htmlRoutes);
+//mongoose setup
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/reddit-scraper", {
+    useMongoClient: true
+});
+
+// routes
+const htmlRoutes = require("./routes/htmlRoutes");
+const apiRoutes = require("./routes/apiRoutes");
+
+app.use("/", htmlRoutes);
+app.use("/api/", apiRoutes);
+
 
 app.listen(PORT, function(){
     console.log("app is running on " + PORT)
