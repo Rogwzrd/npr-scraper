@@ -6,8 +6,8 @@ const db = require("../models/index");
 
 apiRouter.get("/scrape", function(req, res){
     request("http://www.reddit.com/r/tekken", function(req, res, html){
+
         const $ = cheerio.load(html);
-        const results = [];
 
         $("a.title").each(function(i, element){
             const link = $(element).attr("href");
@@ -21,12 +21,24 @@ apiRouter.get("/scrape", function(req, res){
             }).catch(function(err){
                 console.log(err);
             });
-        })
+        });
     });
-    res.status(200).end();
 });
 
-apiRouter.post("/submit", function(req, res){
+apiRouter.get("/articles", function(req, res){
+    db.Article.find({})
+        .then(function(data){
+        console.log("server side database pull");
+            console.log(data);
+            res.send(data);
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+});
+
+apiRouter.post("/articles", function(req, res){
+    let article = req.body;
     res.render('post saved')
 });
 
