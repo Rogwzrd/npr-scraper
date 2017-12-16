@@ -1,12 +1,20 @@
 const express = require('express');
 const htmlRouter = express.Router();
+const db = require("../models/index");
 
 htmlRouter.get("/", function(req, res){
-    res.render('index')
+    db.Article.find({},function(err, docs){
+        if (err) throw err;
+        res.render('index', {article: docs});
+    })
 });
 
 htmlRouter.get("/saved", function(req, res){
-    res.render('saved')
+
+    db.Article.find({saved: true},function(err, docs){
+        if (err) throw err;
+        res.render('saved', {article: docs});
+    });
 });
 
 module.exports = htmlRouter;

@@ -1,0 +1,33 @@
+body{
+    background-image: url("../img/world.jpg");
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.low-opacity {
+    opacity: 0.90;
+}
+
+.card-margin {
+    margin-bottom: 5px;
+}
+
+.align-left{
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
+.link-style {
+    color: white;
+}
+
+.link-style:hover{
+    color: grey;
+    text-decoration: none;
+
+}

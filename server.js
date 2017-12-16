@@ -26,7 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 //mongoose setup
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/reddit-scraper", {
+mongoose.connect("mongodb://localhost/npr-scraper", {
     useMongoClient: true
 });
 

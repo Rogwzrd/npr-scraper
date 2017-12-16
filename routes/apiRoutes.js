@@ -5,17 +5,19 @@ const request = require("request");
 const db = require("../models/index");
 
 apiRouter.get("/scrape", function(req, res){
-    request("http://www.reddit.com/r/tekken", function(req, res, html){
+    request("http://www.npr.com", function(req, res, html){
 
         const $ = cheerio.load(html);
 
-        $("a.title").each(function(i, element){
-            const link = $(element).attr("href");
-            const title = $(element).text();
+        $("div.story-text").each(function(i, element){
+            const link = $(element).children("a").attr("href");
+            const title = $(element).children("a").children("h1").text();
+            const teaser = $(element).children("a").children("p.teaser").text();
 
             db.Article.create({
                 title: title,
-                link: link
+                link: link,
+                teaser: teaser
             }).then(function(dbArticle){
                 console.log(dbArticle)
             }).catch(function(err){
@@ -37,9 +39,12 @@ apiRouter.get("/articles", function(req, res){
         })
 });
 
-apiRouter.post("/articles", function(req, res){
-    let article = req.body;
-    res.render('post saved')
+apiRouter.post("/articles/saved/:id", function(req, res){
+    let articleId = req.params.id;
+    db.Article.update({_id: articleId}, {$set: {saved: true}},function(err, docs){
+        console.log(docs);
+    });
+    res.send('post saved')
 });
 
 module.exports = apiRouter;
