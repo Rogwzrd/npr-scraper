@@ -28,7 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 //mongoose setup
 mongoose.Promise = Promise;
 
-if (process.env.MONGODD_URI){
+if (process.env.MONGODB_URI){
     mongoose.connect(process.env.MONGODB_URI);
 } else {
     mongoose.connect("mongodb://localhost/npr-scraper", {
