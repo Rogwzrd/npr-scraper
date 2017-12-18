@@ -11,8 +11,11 @@ htmlRouter.get("/", function(req, res){
 
 htmlRouter.get("/saved", function(req, res){
 
-    db.Article.find({saved: true},function(err, docs){
+    db.Article.find({saved: true})
+        .populate("notes")
+        .exec(function(err, docs){
         if (err) throw err;
+        console.log(docs);
         res.render('saved', {article: docs});
     });
 });

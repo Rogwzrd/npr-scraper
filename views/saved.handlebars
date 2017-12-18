@@ -14,18 +14,41 @@
         </ul>
     </div>
 </nav>
-<div id="savedArticles" class="container">
+<div class="jumbotron jumbotron-fluid low-opacity">
+    <div class="container">
+        <h1>NPR scraper Saved Articles</h1>
+    </div>
+</div>
+<div id="savedArticles" class="container my-5">
     {{#each article}}
         <div class="card text-light bg-dark mb-3 low-opacity">
             <div class="card-header">
                 <a href="{{link}}" target="_blank" class="link-style align-left"><h4>{{title}}</h4></a>
-                <button class="btn btn-danger align-right saveArticle" data-id="{{_id}}">Save</button>
+                <button class="btn btn-danger align-right unsaveArticle" data-id="{{_id}}">Unsave</button>
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0">
                     <p>{{teaser}}</p>
                 </blockquote>
             </div>
+            <div class="card-footer">
+                <div class="form-group" data-id="{{_id}}">
+                    <div class="noteSpace">
+                        {{#each notes}}
+                            <div class="clear mb-1">
+                                <form>
+                                    <input class="form-control mb-1" value="{{this.title}}">
+                                    <textarea class="form-control mb-1">{{this._id}}</textarea>
+                                </form>
+                                <button class="btn btn-sm" data-id="{{this._id}}">delete note</button>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <input name="note" class="form-control form-control-sm mb-1 newNote" placeholder="add note text">
+                    <button class="btn btn-sm btn-success addNote">Add a note</button>
+                </div>
+            </div>
         </div>
     {{/each}}
+
 </div>

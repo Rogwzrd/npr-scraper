@@ -29,5 +29,14 @@ body{
 .link-style:hover{
     color: grey;
     text-decoration: none;
+}
 
+.comment-body{
+    background-color: white;
+    border-style: solid;
+    border-radius: 3px;
+}
+
+.clear{
+    clear: both;
 }

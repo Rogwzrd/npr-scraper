@@ -27,24 +27,37 @@ apiRouter.get("/scrape", function(req, res){
     });
 });
 
-apiRouter.get("/articles", function(req, res){
-    db.Article.find({})
-        .then(function(data){
-        console.log("server side database pull");
-            console.log(data);
-            res.send(data);
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-});
-
-apiRouter.post("/articles/saved/:id", function(req, res){
-    let articleId = req.params.id;
-    db.Article.update({_id: articleId}, {$set: {saved: true}},function(err, docs){
+apiRouter.post("/articles/save/:id", function(req, res){
+    db.Article.update({_id: req.params.id}, {$set: {saved: true}},function(err, docs){
         console.log(docs);
     });
     res.send('post saved')
+});
+
+apiRouter.post("/articles/unsave/:id", function(req, res){
+    db.Article.update({_id: req.params.id}, {$set: {saved: false}},function(err, docs){
+        console.log(docs);
+    });
+    res.send('post unsaved')
+});
+
+apiRouter.post("/articles/:id", function(req, res){
+    db.Note.create(req.body)
+        .then(function(newNote){
+            console.log("/////new note////");
+            console.log(newNote);
+            console.log("/////new note////");
+            return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {notes: newNote._id}}, {new: true})
+        })
+        .then(function(articleNote){
+            console.log("////article note////");
+            console.log(articleNote);
+            console.log("////article note////");
+        })
+        .catch(function(err){
+            console.log(err)
+    });
+    res.status(200).end();
 });
 
 module.exports = apiRouter;
