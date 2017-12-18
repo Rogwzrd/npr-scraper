@@ -4,7 +4,7 @@ $("#scrape").on("click",function () {
         url: "/api/scrape"
     }).then(function(data) {
         console.log(data);
-        window.reload();
+        location.reload();
     }).catch(function(error){
         console.log(error);
     });
@@ -17,7 +17,8 @@ $(document).on("click", ".saveArticle", function(){
         method: "POST",
         url: "api/articles/save/" + articleId
     }).then(function(savedData){
-        console.log(savedData)
+        console.log(savedData);
+        location.reload();
     }).catch(function(error){
         console.log(error);
     });
@@ -30,7 +31,8 @@ $(document).on("click", ".unsaveArticle", function(){
         method: "POST",
         url: "api/articles/unsave/" + articleId
     }).then(function(savedData){
-        console.log(savedData)
+        console.log(savedData);
+        location.reload();
     }).catch(function(error){
         console.log(error);
     });
@@ -42,7 +44,7 @@ $(document).on("click", ".addNote", function(){
     console.log(articleId);
     console.log(noteText);
     $.post(`api/articles/${articleId}`, noteText, function(){
-        console.log("successful post")
+        console.log("successful post");
     })
     .then(function(note){
         console.log(note);

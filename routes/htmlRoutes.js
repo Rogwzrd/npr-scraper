@@ -3,7 +3,7 @@ const htmlRouter = express.Router();
 const db = require("../models/index");
 
 htmlRouter.get("/", function(req, res){
-    db.Article.find({},function(err, docs){
+    db.Article.find({saved: false},function(err, docs){
         if (err) throw err;
         res.render('index', {article: docs});
     })

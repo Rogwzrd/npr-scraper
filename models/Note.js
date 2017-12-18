@@ -8,9 +8,13 @@ const NoteSchema = new Schema({
     },
     body: {
         type: String,
+    },
+    article: {
+        type: Schema.Types.ObjectId,
+        ref: "Article"
     }
 });
 
-const Article = mongoose.model("Note", NoteSchema);
+const Note = mongoose.model("Note", NoteSchema);
 
-module.exports = Article;
+module.exports = Note;

@@ -17,6 +17,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // static files served to the client side
 app.use(express.static("public"));
 
+
 // handlebars setup
 app.engine("handlebars", hbars({ defaultLayout: "main" }));
 // this will render handlebars files when res.render is called.
@@ -26,9 +27,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 //mongoose setup
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/npr-scraper", {
-    useMongoClient: true
-});
+
+if (process.env.MONGODD_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+} else {
+    mongoose.connect("mongodb://localhost/npr-scraper", {
+        useMongoClient: true
+    });
+}
+
+
 
 // routes
 const htmlRoutes = require("./routes/htmlRoutes");
