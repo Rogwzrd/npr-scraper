@@ -60,4 +60,11 @@ apiRouter.post("/articles/:id", function(req, res){
     res.status(200).end();
 });
 
+apiRouter.post("/notes/remove/:id", function(req, res){
+    db.Note.remove({_id: req.params.id}, function(err, docs){
+        console.log(docs);
+    });
+    res.send('post removed')
+});
+
 module.exports = apiRouter;

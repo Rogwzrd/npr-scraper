@@ -52,11 +52,9 @@ $(document).on("click", ".addNote", function(){
 });
 
 $(document).on("click", ".removeNote", function(){
-    const articleId = $(this).parent().attr("data-id");
+    const articleId = $(this).attr("data-id");
     console.log(articleId);
-    $.ajax({
-        method: "POST",
-        url: "api/articles/" + articleId
+    $.post(`api/notes/remove/${articleId}`, function(){
     }).then(function(note){
         console.log(note);
     }).catch(function(error){

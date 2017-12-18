@@ -38,9 +38,9 @@
                             <div class="clear mb-1">
                                 <form>
                                     <input class="form-control mb-1" value="{{this.title}}">
-                                    <textarea class="form-control mb-1">{{this._id}}</textarea>
+                                    <textarea class="form-control mb-1">{{this.body}}</textarea>
                                 </form>
-                                <button class="btn btn-sm" data-id="{{this._id}}">delete note</button>
+                                <button class="btn btn-sm removeNote" data-id="{{this._id}}">delete note</button>
                             </div>
                         {{/each}}
                     </div>
