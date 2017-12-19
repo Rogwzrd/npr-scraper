@@ -4,6 +4,7 @@ const cheerio = require("cheerio");
 const request = require("request");
 const db = require("../models/index");
 
+// scrape page for new articles and add them to the database
 apiRouter.get("/scrape", function(req, res){
     request("http://www.npr.com", function(req, res, html){
 
@@ -24,9 +25,14 @@ apiRouter.get("/scrape", function(req, res){
                 console.log(err);
             });
         });
-    });
+    }).then(function(){
+        res.send("scrape finished");
+    }).catch(function(err){
+        console.log(err);
+    })
 });
 
+// save an article
 apiRouter.post("/articles/save/:id", function(req, res){
     db.Article.update({_id: req.params.id}, {$set: {saved: true}},function(err, docs){
         console.log(docs);
@@ -34,6 +40,7 @@ apiRouter.post("/articles/save/:id", function(req, res){
     res.send('post saved')
 });
 
+// unsave an article
 apiRouter.post("/articles/unsave/:id", function(req, res){
     db.Article.update({_id: req.params.id}, {$set: {saved: false}},function(err, docs){
         console.log(docs);
@@ -41,6 +48,7 @@ apiRouter.post("/articles/unsave/:id", function(req, res){
     res.send('post unsaved')
 });
 
+// create a new note
 apiRouter.post("/articles/:id", function(req, res){
     db.Note.create(req.body)
         .then(function(newNote){
@@ -60,6 +68,7 @@ apiRouter.post("/articles/:id", function(req, res){
     res.status(200).end();
 });
 
+// remove a note
 apiRouter.post("/notes/remove/:id", function(req, res) {
     db.Note.find({_id: req.params.id})
         .then(function (noteData) {
@@ -78,4 +87,14 @@ apiRouter.post("/notes/remove/:id", function(req, res) {
     res.status(200).end();
 });
 
-    module.exports = apiRouter;
+apiRouter.post("/notes/update/:id", function(req, res){
+    db.Note.findOneAndUpdate({_id: req.params.id}, {$set: {title: req.body.title, body: req.body.body}})
+        .then(function(updatedNote){
+            console.log(updatedNote)
+        })
+        .catch(function(err) {
+            console.log(err);
+        });
+    res.status(200).end();
+});
+module.exports = apiRouter;

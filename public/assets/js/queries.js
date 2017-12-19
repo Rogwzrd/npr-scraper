@@ -1,3 +1,4 @@
+// scrape page for new articles
 $("#scrape").on("click",function () {
     $.ajax({
         method: "GET",
@@ -10,6 +11,7 @@ $("#scrape").on("click",function () {
     });
 });
 
+// save an article
 $(document).on("click", ".saveArticle", function(){
     const articleId = $(this).attr("data-id");
     console.log(articleId);
@@ -24,6 +26,7 @@ $(document).on("click", ".saveArticle", function(){
     });
 });
 
+// unsave an article
 $(document).on("click", ".unsaveArticle", function(){
     const articleId = $(this).attr("data-id");
     console.log(articleId);
@@ -38,31 +41,49 @@ $(document).on("click", ".unsaveArticle", function(){
     });
 });
 
+// add a note
 $(document).on("click", ".addNote", function(){
     const articleId = $(this).parent().attr("data-id");
-    const noteText = {title: "header" , body: $(this).siblings("input").val().trim(), article: articleId};
+    const noteText = {title: $(this).siblings("input.newNote-header").val().trim() , body: $(this).siblings("input.newNote").val().trim(), article: articleId};
     console.log(articleId);
-    console.log(noteText);
+    console.log(JSON.stringify(noteText, null, 2));
     $.post(`api/articles/${articleId}`, noteText, function(){
         console.log("successful post");
     })
     .then(function(note){
         console.log(note);
+        location.reload();
     }).catch(function(error){
         console.log(error);
     });
 });
 
+// remove a note
 $(document).on("click", ".removeNote", function(){
     const articleId = $(this).attr("data-id");
     console.log(articleId);
     $.post(`api/notes/remove/${articleId}`, function(){
     }).then(function(note){
         console.log(note);
+        location.reload();
     }).catch(function(error){
         console.log(error);
     });
 });
 
+// update a note
 $(document).on("click", ".updateNote", function(){
-})
+    const noteId = $(this).attr("data-id");
+    const noteText = {title: $(this).siblings("form").children("input").val().trim() , body: $(this).siblings("form").children("textarea").val().trim()};
+    console.log(noteId);
+    console.log(JSON.stringify(noteText, null, 2));
+    $.post(`api/notes/update/${noteId}`, noteText, function(){
+        console.log("successful post");
+    })
+        .then(function(note){
+            console.log(note);
+            location.reload();
+        }).catch(function(error){
+        console.log(error);
+    });
+});
