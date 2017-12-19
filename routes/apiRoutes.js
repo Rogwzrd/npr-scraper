@@ -6,7 +6,7 @@ const db = require("../models/index");
 
 // scrape page for new articles and add them to the database
 apiRouter.get("/scrape", function(req, res){
-    request("http://www.npr.com", function(req, res, html){
+    request("http://www.npr.com", function(request, response, html){
 
         const $ = cheerio.load(html);
 
@@ -21,6 +21,7 @@ apiRouter.get("/scrape", function(req, res){
                 teaser: teaser
             }).then(function(dbArticle){
                 console.log(dbArticle)
+                res.send("done");
             }).catch(function(err){
                 console.log(err);
             });
