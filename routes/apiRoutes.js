@@ -25,10 +25,6 @@ apiRouter.get("/scrape", function(req, res){
                 console.log(err);
             });
         });
-    }).then(function(){
-        res.send("scrape finished");
-    }).catch(function(err){
-        console.log(err);
     })
 });
 

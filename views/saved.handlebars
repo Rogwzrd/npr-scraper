@@ -35,14 +35,24 @@
                 <div class="form-group" data-id="{{_id}}">
                     <div class="noteSpace">
                         {{#each notes}}
-                            <div class="clear mb-1">
-                                <form>
-                                    <input class="form-control mb-1" value="{{this.title}}">
-                                    <textarea class="form-control mb-1">{{this.body}}</textarea>
-                                </form>
-                                <button class="btn btn-sm updateNote" data-id="{{this._id}}">Update Note</button>
-                                <button class="btn btn-sm removeNote" data-id="{{this._id}}">delete note</button>
+                            <div id="accordion" data-children=".item{{this._id}}">
+                                <div class="item{{this._id}}">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#accordion{{this._id}}" aria-expanded="true" aria-controls="exampleAccordion1">
+                                        Note
+                                    </a>
+                                    <div id="accordion{{this._id}}" class="collapse" role="tabpanel">
+                                        <div class="clear mb-1">
+                                            <form>
+                                                <input class="form-control mb-1" value="{{this.title}}">
+                                                <textarea class="form-control mb-1">{{this.body}}</textarea>
+                                            </form>
+                                            <button class="btn btn-sm updateNote" data-id="{{this._id}}">Update Note</button>
+                                            <button class="btn btn-sm removeNote" data-id="{{this._id}}">delete note</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+
                         {{/each}}
                     </div>
                     <input name="note-title" class="form-control form-control-sm mb-1 newNote-header" placeholder="add note title">
