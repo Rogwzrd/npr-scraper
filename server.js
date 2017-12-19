@@ -25,9 +25,9 @@ app.set("view engine", "handlebars");
 // this will determine the file path for handlebars views
 app.set('views', path.join(__dirname, 'views'));
 
-//mongoose setup
+// mongoose setup
 mongoose.Promise = Promise;
-
+// production/dev database setup
 if (process.env.MONGODB_URI){
     mongoose.connect(process.env.MONGODB_URI);
 } else {
@@ -35,8 +35,6 @@ if (process.env.MONGODB_URI){
         useMongoClient: true
     });
 }
-
-
 
 // routes
 const htmlRoutes = require("./routes/htmlRoutes");

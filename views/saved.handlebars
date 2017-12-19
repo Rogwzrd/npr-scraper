@@ -40,11 +40,12 @@
                                     <input class="form-control mb-1" value="{{this.title}}">
                                     <textarea class="form-control mb-1">{{this.body}}</textarea>
                                 </form>
+                                <button class="btn btn-sm updateNote" data-id="{{this._id}}">Update Note</button>
                                 <button class="btn btn-sm removeNote" data-id="{{this._id}}">delete note</button>
                             </div>
                         {{/each}}
                     </div>
-                    <input name="note" class="form-control form-control-sm mb-1 newNote" placeholder="add note text">
+                    <input name="note" class="form-control form-control-sm mt-3 newNote" placeholder="add note text">
                     <button class="btn btn-sm btn-success addNote">Add a note</button>
                 </div>
             </div>

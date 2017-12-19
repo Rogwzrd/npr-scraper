@@ -60,11 +60,22 @@ apiRouter.post("/articles/:id", function(req, res){
     res.status(200).end();
 });
 
-apiRouter.post("/notes/remove/:id", function(req, res){
-    db.Note.remove({_id: req.params.id}, function(err, docs){
-        console.log(docs);
-    });
-    res.send('post removed')
+apiRouter.post("/notes/remove/:id", function(req, res) {
+    db.Note.find({_id: req.params.id})
+        .then(function (noteData) {
+            console.log("/////retrieving article id from note for deletion/////////")
+            console.log(noteData);
+            console.log("//////////////////////////////////////////////////////////")
+            return db.Article.update({_id: noteData[0].article}, {"$pull": {"notes": req.params.id}}, {safe: true})
+        })
+        .then(function (removedData) {
+            console.log(removedData);
+            return db.Note.remove({_id: req.params.id})
+        })
+        .catch(function (err) {
+            console.log(err)
+        });
+    res.status(200).end();
 });
 
-module.exports = apiRouter;
+    module.exports = apiRouter;

@@ -40,7 +40,7 @@ $(document).on("click", ".unsaveArticle", function(){
 
 $(document).on("click", ".addNote", function(){
     const articleId = $(this).parent().attr("data-id");
-    const noteText = {title: "header" , body: $(this).siblings("input").val().trim()};
+    const noteText = {title: "header" , body: $(this).siblings("input").val().trim(), article: articleId};
     console.log(articleId);
     console.log(noteText);
     $.post(`api/articles/${articleId}`, noteText, function(){
@@ -63,3 +63,6 @@ $(document).on("click", ".removeNote", function(){
         console.log(error);
     });
 });
+
+$(document).on("click", ".updateNote", function(){
+})
