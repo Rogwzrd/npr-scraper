@@ -3,10 +3,14 @@ const bodyParser = require("body-parser");
 const hbars = require('express-handlebars');
 const path = require("path");
 const mongoose = require("mongoose");
+var logger = require('morgan')
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// morgan for loggin of event
+app.use(logger("dev"));
 
 // body parser setup
 app.use(bodyParser.json());
