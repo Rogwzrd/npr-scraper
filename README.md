@@ -1,3 +1,13 @@
 # NPR-SCRAPER
 
-This project is a full stack application that uses Handlebars, Mongodb, Mongoose, Morgan, and cheerio to scrape the NPR webpage to scrap articles to a database. From there users can then select specific articles to save for to view later and also add notes. The users can also update and/or delete these notes.
+This project is an application that scrapes the NPR webpage and sends the scraped articles to a database. From there users can then select specific articles to save for to view later and also add notes.
+
+### Technologies Used: 
+
+* Node
+* MongoDB
+* Handlebars
+* Morgan
+* Cheerio
+
+View the deployed application at https://calm-depths-52315.herokuapp.com/
